@@ -145,7 +145,7 @@
     .box-select { width: 100%; border: 0; padding: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
 
     .box-visual { display: block; height: 360px; overflow: hidden; background: var(--ivory-deep); }
-    .box-visual img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .3s; }
+    .box-visual img { width: 100%; height: 100%; display: block; object-fit: contain; padding: 2%; transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .3s; }
     .box-card:hover .box-visual img { transform: scale(1.035); }
     .box-card.active .box-visual { box-shadow: inset 0 0 0 4px var(--burgundy); }
 
@@ -189,6 +189,7 @@
 
     .opening-image { position: relative; overflow: hidden; min-height: 620px; background: var(--blush); }
     .opening-image img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; object-position: var(--image-position, center); transition: opacity .7s ease, transform 1.25s cubic-bezier(.2,.8,.2,1), filter .5s; }
+    .opening-image .opening-photo-closed, .opening-image .opening-photo-open { object-fit: contain; padding: clamp(24px, 4vw, 58px); }
     .opening-photo-open { opacity: 0; transform: scale(.985); }
     .opening.is-opening .opening-photo-closed { opacity: 0; transform: scale(1.035); filter: brightness(1.08); }
     .opening.is-opening .opening-photo-open { opacity: 1; transform: scale(1); filter: brightness(1.04); }
@@ -551,8 +552,8 @@
     <main>
       <section class="opening" id="opening" aria-label="Selected collection">
         <div class="opening-image">
-          <img class="opening-photo-closed" id="opening-photo" src="./images/london-box-green.png" alt="Closed London Edit presentation box" loading="lazy" decoding="async">
-          <img class="opening-photo-open" id="opening-photo-open" src="./images/london-box-open.png" alt="Open London Edit presentation box" loading="lazy" decoding="async">
+          <img class="opening-photo-closed" id="opening-photo" src="./images/luxury-edits-trunk.webp" alt="Closed London Edit presentation box" loading="lazy" decoding="async">
+          <img class="opening-photo-open" id="opening-photo-open" src="./images/luxury-edits-trunk.webp" alt="Open London Edit presentation box" loading="lazy" decoding="async">
           <span class="opening-stamp" id="opening-stamp">Collection 01</span>
         </div>
         <div class="opening-panel">
@@ -707,7 +708,7 @@
       {
         id: 'london', number: '01', name: 'London Edit', title: 'An accessible way into designer bags.',
         description: 'A broad mix led by Kate Spade, Michael Kors, and Coach, with slimmer—but real—chances at Prada, Louis Vuitton, and Chanel.',
-        price: 5000, boxImage: './images/london-box-green.png', openImage: './images/london-box-open.png', image: './images/london-edit.png', imagePosition: 'center',
+        price: 5000, boxImage: './images/luxury-edits-trunk.webp', openImage: './images/luxury-edits-trunk.webp', image: './images/london-edit.png', imagePosition: 'center',
         products: [
           { brand: 'Kate Spade', name: 'Knott Medium Tote', tier: 'Essential', chance: 46, value: 29800, position: '79% 70%' },
           { brand: 'Michael Kors', name: 'Laila Medium Satchel', tier: 'Essential', chance: 33, value: 39800, position: '31% 67%' },
@@ -720,7 +721,7 @@
       {
         id: 'new-york', number: '02', name: 'New York Edit', title: 'More room for the icons.',
         description: 'A balanced designer mix with improved odds for Prada, Louis Vuitton, Chanel, and other premium houses.',
-        price: 10000, boxImage: './images/new-york-box.png', openImage: './images/new-york-box-open.png', image: './images/new-york-edit.png', imagePosition: 'center',
+        price: 10000, boxImage: './images/luxury-edits-trunk.webp', openImage: './images/luxury-edits-trunk.webp', image: './images/new-york-edit.png', imagePosition: 'center',
         products: [
           { brand: 'Kate Spade', name: 'Deco Crossbody', tier: 'Essential', chance: 36, value: 32800, position: '46% 76%' },
           { brand: 'Michael Kors', name: 'Nolita Shoulder Bag', tier: 'Essential', chance: 28, value: 45800, position: '28% 67%' },
@@ -733,7 +734,7 @@
       {
         id: 'milan', number: '03', name: 'Milan Edit', title: 'Premium names move within reach.',
         description: 'Stronger chances at Prada and Louis Vuitton, plus Chanel and standout purses from established contemporary labels.',
-        price: 25000, boxImage: './images/milan-box-cognac.png', openImage: './images/milan-box-open.png', image: './images/milan-edit.png', imagePosition: 'center',
+        price: 25000, boxImage: './images/luxury-edits-trunk.webp', openImage: './images/luxury-edits-trunk.webp', image: './images/milan-edit.png', imagePosition: 'center',
         products: [
           { brand: 'Kate Spade', name: 'Hudson Convertible Crossbody', tier: 'Essential', chance: 25, value: 39800, position: '34% 80%' },
           { brand: 'Michael Kors', name: 'Ludlow Shoulder Bag', tier: 'Essential', chance: 23, value: 55800, position: '31% 55%' },
@@ -746,7 +747,7 @@
       {
         id: 'paris', number: '04', name: 'Paris Edit', title: 'Our strongest luxury odds.',
         description: 'The highest published chances for Chanel, Louis Vuitton, Prada, and other top-tier designer purses in the collection.',
-        price: 100000, boxImage: './images/paris-box.png', openImage: './images/paris-box-open.png', image: './images/paris-edit.png', imagePosition: 'center',
+        price: 100000, boxImage: './images/luxury-edits-trunk.webp', openImage: './images/luxury-edits-trunk.webp', image: './images/paris-edit.png', imagePosition: 'center',
         products: [
           { brand: 'Kate Spade', name: 'Collection Evening Bag', tier: 'Essential', chance: 18, value: 49800, position: '35% 77%' },
           { brand: 'Michael Kors', name: 'Collection Leather Tote', tier: 'Essential', chance: 17, value: 69800, position: '29% 55%' },
@@ -903,7 +904,7 @@
         <article class="box-card ${box.id === state.selected.id ? 'active' : ''}" data-box="${box.id}">
           <button class="box-select" type="button" data-select-box="${box.id}" aria-pressed="${box.id === state.selected.id}" aria-label="Select ${box.name}">
             <span class="selected-badge">Selected box</span>
-            <span class="box-visual"><img src="${box.boxImage}" alt="${box.name} presentation box" style="object-position:${box.imagePosition}" loading="lazy" decoding="async"></span>
+            <span class="box-visual"><img src="${box.boxImage}" alt="${box.name} presentation box" style="object-position:${box.imagePosition}" loading="eager" decoding="sync"></span>
             <span class="box-meta">
               <span class="box-number">Collection ${box.number} · Designer purse assortment</span>
               <span class="box-name">${box.name}</span><span class="box-price">${money.format(box.price / 100)}</span>
