@@ -136,9 +136,10 @@
       padding: 0 0 22px;
       text-align: left;
       background: transparent;
-      cursor: pointer;
       border-bottom: 1px solid var(--line);
     }
+
+    .box-select { width: 100%; border: 0; padding: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
 
     .box-visual { display: block; height: 360px; overflow: hidden; background: var(--ivory-deep); }
     .box-visual img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .3s; }
@@ -172,7 +173,7 @@
     .box-price { align-self: center; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
     .box-desc { grid-column: 1 / -1; max-width: 340px; color: var(--muted); font-size: 12px; line-height: 1.6; }
 
-    .carousel-controls { display: none; }
+    .carousel-controls, .mobile-box-actions { display: none; }
 
     .opening {
       margin: 56px 0 0;
@@ -418,7 +419,7 @@
         box-shadow: 0 8px 24px rgba(63, 28, 31, .055);
         transition: border-color .2s, box-shadow .2s, transform .2s;
       }
-      .box-card:active { transform: scale(.985); }
+      .box-select:active { transform: scale(.985); }
       .box-card.active {
         display: block;
         border-color: rgba(93, 19, 40, .65);
@@ -433,6 +434,12 @@
       .box-name { overflow: hidden; font: 700 19px/1.2 var(--sans); letter-spacing: -.025em; text-overflow: ellipsis; white-space: nowrap; }
       .box-price { align-self: center; font-size: 12px; }
       .box-desc { display: block; max-width: none; font-size: 11px; line-height: 1.5; }
+      .mobile-box-actions { display: block; margin: 15px 6px 1px; padding-top: 14px; border-top: 1px solid var(--line); }
+      .mobile-odds-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-bottom: 14px; color: var(--muted); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+      .mobile-open-actions { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+      .mobile-open-btn { border-radius: 13px; }
+      .mobile-proof-btn { min-height: 54px; padding-inline: 14px; border-radius: 13px; }
+      .boxes.is-opening .box-card.active .box-visual img { transform: scale(1.04); filter: brightness(1.08); }
       .carousel-controls {
         display: grid;
         grid-template-columns: 48px 1fr 48px;
@@ -462,27 +469,8 @@
         transition: width .2s, background .2s;
       }
       .box-dot.active { width: 28px; background: var(--burgundy); }
-      .opening {
-        min-height: 0;
-        margin: 18px 12px 26px;
-        overflow: hidden;
-        border: 1px solid rgba(71, 39, 38, .09);
-        border-radius: 20px;
-        box-shadow: 0 12px 34px rgba(63, 28, 31, .075);
-      }
-      .opening-image { display: none; }
-      .opening-panel { padding: 20px; }
-      .opening-panel .kicker { margin-bottom: 8px; }
-      .opening-panel h2 { margin-bottom: 10px; font: 650 24px/1.05 var(--sans); letter-spacing: -.035em; }
-      .opening-panel > p:not(.kicker) { font-size: 12px; line-height: 1.55; }
-      .round-meta { margin: 17px 0 14px; padding: 9px 0; }
-      .round-row { align-items: center; gap: 12px; }
-      .round-row:nth-child(2), .round-row:nth-child(3) { display: none; }
-      .round-row code { max-width: 48%; }
-      .open-actions { grid-template-columns: 1fr auto; }
+      .opening { display: none; }
       .open-btn, .keep-btn { min-height: 54px; }
-      .open-btn { border-radius: 13px; }
-      .secondary-btn { min-height: 54px; padding-inline: 14px; border-radius: 13px; }
       .trust { display: none; }
       .site-footer { flex-direction: column; gap: 8px; padding: 12px 16px max(34px, env(safe-area-inset-bottom)); font-size: 8px; }
       .modal { padding: 0; align-items: end; }
@@ -858,21 +846,37 @@
 
     function renderBoxes() {
       boxList.innerHTML = BOXES.map(box => `
-        <button class="box-card ${box.id === state.selected.id ? 'active' : ''}" type="button" data-box="${box.id}" aria-pressed="${box.id === state.selected.id}">
-          <span class="selected-badge">Selected box</span>
-          <span class="box-visual"><img src="${box.boxImage}" alt="${box.name} presentation box" style="object-position:${box.imagePosition}" loading="lazy" decoding="async"></span>
-          <span class="box-meta">
-            <span class="box-number">Collection ${box.number} · Designer purse assortment</span>
-            <span class="box-name">${box.name}</span><span class="box-price">${money.format(box.price / 100)}</span>
-            <span class="box-desc">${box.description}</span>
-          </span>
-        </button>`).join('');
+        <article class="box-card ${box.id === state.selected.id ? 'active' : ''}" data-box="${box.id}">
+          <button class="box-select" type="button" data-select-box="${box.id}" aria-pressed="${box.id === state.selected.id}" aria-label="Select ${box.name}">
+            <span class="selected-badge">Selected box</span>
+            <span class="box-visual"><img src="${box.boxImage}" alt="${box.name} presentation box" style="object-position:${box.imagePosition}" loading="lazy" decoding="async"></span>
+            <span class="box-meta">
+              <span class="box-number">Collection ${box.number} · Designer purse assortment</span>
+              <span class="box-name">${box.name}</span><span class="box-price">${money.format(box.price / 100)}</span>
+              <span class="box-desc">${box.description}</span>
+            </span>
+          </button>
+          <div class="mobile-box-actions">
+            <div class="mobile-odds-row"><span>Published purse odds</span><button class="text-link" type="button" data-show-odds>See what's inside</button></div>
+            <div class="mobile-open-actions">
+              <button class="open-btn mobile-open-btn" type="button" data-open-box ${state.opening || !state.round ? 'disabled' : ''}>
+                <span>Open this box</span><span class="open-cost">${money.format(box.price / 100)}</span>
+              </button>
+              <button class="secondary-btn mobile-proof-btn" type="button" data-show-proof>Fairness</button>
+            </div>
+          </div>
+        </article>`).join('');
 
       boxDots.innerHTML = BOXES.map((box, index) => `
         <button class="box-dot ${box.id === state.selected.id ? 'active' : ''}" type="button" data-carousel-box="${box.id}" aria-label="Select ${box.name}, box ${index + 1} of ${BOXES.length}" aria-pressed="${box.id === state.selected.id}"></button>`).join('');
 
       const selectedIndex = BOXES.findIndex(box => box.id === state.selected.id);
       boxStatus.textContent = `${state.selected.name} selected, box ${selectedIndex + 1} of ${BOXES.length}`;
+    }
+
+    function setOpeningDisabled(disabled) {
+      openBtn.disabled = disabled;
+      boxList.querySelectorAll('[data-open-box]').forEach(button => { button.disabled = disabled; });
     }
 
     function renderBalance() {
@@ -902,7 +906,7 @@
       $('#opening-photo').style.setProperty('--image-position', state.selected.imagePosition);
       $('#opening-photo').style.objectPosition = state.selected.imagePosition;
       $('#opening-photo-open').style.objectPosition = state.selected.imagePosition;
-      if (scroll && window.innerWidth < 901) opening.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (scroll && window.innerWidth > 560 && window.innerWidth < 901) opening.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function cycleBox(direction) {
@@ -951,7 +955,8 @@
       localStorage.setItem('bagbox-client-seed', clientSeed);
 
       state.opening = true;
-      openBtn.disabled = true;
+      setOpeningDisabled(true);
+      boxList.classList.add('is-opening');
       state.balance -= box.price;
       renderBalance();
 
@@ -994,11 +999,12 @@
       state.pending = null;
       hideModal($('#reward-modal'));
       opening.classList.remove('is-opening');
+      boxList.classList.remove('is-opening');
       state.nonce += 1;
       localStorage.setItem('bagbox-fair-nonce', state.nonce);
       state.round = await createRound();
       state.opening = false;
-      openBtn.disabled = false;
+      setOpeningDisabled(false);
       renderCommitment();
       showToast('Purse added to your collection. A new seed is now committed.');
     }
@@ -1069,8 +1075,22 @@
 
     boxList.addEventListener('click', event => {
       if (Date.now() < ignoreCarouselClickUntil) return;
-      const card = event.target.closest('[data-box]');
-      if (card) selectBox(card.dataset.box);
+      if (event.target.closest('[data-open-box]')) {
+        openBox();
+        return;
+      }
+      if (event.target.closest('[data-show-odds]')) {
+        renderOdds();
+        showModal($('#odds-modal'));
+        return;
+      }
+      if (event.target.closest('[data-show-proof]')) {
+        renderProof();
+        showModal($('#fair-modal'));
+        return;
+      }
+      const selector = event.target.closest('[data-select-box]');
+      if (selector) selectBox(selector.dataset.selectBox);
     });
 
     boxDots.addEventListener('click', event => {
@@ -1132,7 +1152,7 @@
       selectBox(state.selected.id, false);
       state.round = await createRound();
       renderCommitment();
-      openBtn.disabled = false;
+      setOpeningDisabled(false);
     }
 
     init();
