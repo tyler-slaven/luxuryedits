@@ -149,7 +149,7 @@
     .box-desc { grid-column: 1 / -1; max-width: 340px; color: var(--muted); font-size: 12px; line-height: 1.6; }
 
     .opening {
-      margin: 132px 0 0;
+      margin: 56px 0 0;
       display: grid;
       grid-template-columns: 1.1fr .9fr;
       min-height: 670px;
@@ -464,29 +464,21 @@
       <span class="top-note">The City Editions / 2026</span>
       <div class="brand" aria-label="Bagbox home">Bagbox</div>
       <button class="wallet" id="wallet-btn" type="button" aria-label="Open collection">
-        <span>Wallet</span><strong id="balance">$2,500.00</strong><span class="wallet-mark"></span>
+        <span>Wallet</span><strong id="balance">$2,000.00</strong><span class="wallet-mark"></span>
       </button>
     </header>
 
     <main>
-      <section id="drops" aria-labelledby="drops-title">
-        <div class="section-rule">
-          <h2 id="drops-title">Choose a box</h2>
-          <span>Four city edits / Exact odds shown before opening</span>
-        </div>
-        <div class="boxes" id="box-list"></div>
-      </section>
-
       <section class="opening" id="opening" aria-label="Selected collection">
         <div class="opening-image">
-          <img class="opening-photo-closed" id="opening-photo" src="./images/london-box-green.png" alt="Closed London Edit presentation box" loading="lazy" decoding="async">
-          <img class="opening-photo-open" id="opening-photo-open" src="./images/london-box-open.png" alt="Open London Edit presentation box" loading="lazy" decoding="async">
-          <span class="opening-stamp" id="opening-stamp">Collection 01</span>
+          <img class="opening-photo-closed" id="opening-photo" src="./images/paris-box.png" alt="Closed Paris Edit presentation box" loading="lazy" decoding="async">
+          <img class="opening-photo-open" id="opening-photo-open" src="./images/paris-box-open.png" alt="Open Paris Edit presentation box" loading="lazy" decoding="async">
+          <span class="opening-stamp" id="opening-stamp">Collection 04</span>
         </div>
         <div class="opening-panel">
-          <p class="kicker" id="opening-label">London Edit</p>
-          <h2 id="opening-title">Heritage, cut with an edge.</h2>
-          <p id="opening-description">Structured oxblood leather, silk, and evening pieces shaped by modern British restraint.</p>
+          <p class="kicker" id="opening-label">Paris Edit</p>
+          <h2 id="opening-title">The rarest expression of the house.</h2>
+          <p id="opening-description">Haute-couture finishing, deep wine leather, and luminous silk selected without compromise.</p>
           <div class="round-meta" aria-label="Current fairness commitment">
             <div class="round-row"><span>Published odds</span><button class="text-link" id="odds-link" type="button">See every item</button></div>
             <div class="round-row"><span>Seed commitment</span><code id="commitment-short">Preparing…</code></div>
@@ -494,11 +486,19 @@
           </div>
           <div class="open-actions">
             <button class="open-btn" id="open-btn" type="button" disabled>
-              <span>Open collection</span><span class="open-cost" id="open-cost">$50.00</span>
+              <span>Open collection</span><span class="open-cost" id="open-cost">$1,000.00</span>
             </button>
             <button class="secondary-btn" id="proof-link" type="button">Fairness</button>
           </div>
         </div>
+      </section>
+
+      <section id="drops" aria-labelledby="drops-title">
+        <div class="section-rule">
+          <h2 id="drops-title">Choose a box</h2>
+          <span>Four city edits / Exact odds shown before opening</span>
+        </div>
+        <div class="boxes" id="box-list"></div>
       </section>
 
       <section class="trust" aria-labelledby="trust-title">
@@ -522,10 +522,10 @@
   <div class="modal" id="odds-modal" role="dialog" aria-modal="true" aria-labelledby="odds-title">
     <div class="modal-sheet">
       <div class="sheet-head">
-        <div><p class="kicker" id="odds-kicker">London Edit</p><h2 id="odds-title">Every outcome,<br>before you open.</h2></div>
+        <div><p class="kicker" id="odds-kicker">Paris Edit</p><h2 id="odds-title">Every outcome,<br>before you open.</h2></div>
         <button class="close-btn" type="button" aria-label="Close">×</button>
       </div>
-      <div class="odds-summary"><span id="odds-price">Entry $50.00</span><span id="odds-total">Total probability 100.00%</span></div>
+      <div class="odds-summary"><span id="odds-price">Entry $1,000.00</span><span id="odds-total">Total probability 100.00%</span></div>
       <div class="odds-list" id="odds-list"></div>
       <p class="proof-intro">Probabilities apply independently to each opening. Retail values are estimates for physical products and are not guaranteed cash redemption values.</p>
     </div>
@@ -730,14 +730,15 @@
       }
     }
 
-    const savedBalance = localStorage.getItem('bagbox-city-balance');
+    const WALLET_STORAGE_KEY = 'bagbox-city-balance-v2';
+    const savedBalance = localStorage.getItem(WALLET_STORAGE_KEY);
     const storedBalance = savedBalance === null ? NaN : Number(savedBalance);
     const storedInventory = JSON.parse(localStorage.getItem('bagbox-city-inventory') || '[]');
     const storedNonce = Number(localStorage.getItem('bagbox-fair-nonce'));
 
     const state = {
-      selected: BOXES[0],
-      balance: Number.isFinite(storedBalance) && storedBalance >= 0 ? storedBalance : 250000,
+      selected: BOXES.find(box => box.id === 'paris') || BOXES[0],
+      balance: Number.isFinite(storedBalance) && storedBalance >= 0 ? storedBalance : 200000,
       inventory: Array.isArray(storedInventory) ? storedInventory : [],
       nonce: Number.isInteger(storedNonce) && storedNonce >= 0 ? storedNonce : 0,
       round: null,
@@ -797,7 +798,7 @@
 
     function renderBalance() {
       $('#balance').textContent = money.format(state.balance / 100);
-      localStorage.setItem('bagbox-city-balance', state.balance);
+      localStorage.setItem(WALLET_STORAGE_KEY, state.balance);
     }
 
     function renderCommitment() {
