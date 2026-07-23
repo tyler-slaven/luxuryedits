@@ -1,3 +1,7 @@
 Tier,Edit,Price Range,Odds,Return Rate
-Studio,New York,45-99,0.60,0.70
-Runway,New York,125-159,0.40,0.25
+Chic,New York,40-44,0.18,0.9
+Studio,New York,45-99,.32,0.7
+Signature,New York,100-124,.17,0.6
+Runway,New York,125-159,.23,0.5
+Couture,New York,160-194,.076,0.35
+Icon,New York,195-4000,.024,0.01
