@@ -21,22 +21,25 @@ london-001,Mayfair Top Handle,1500.00,Example House,london,Rare,mayfair-top-hand
 
 The page loads `bags.json` when it starts. If an Edit has CSV records, those records replace that Edit's built-in demo purses. An empty or unavailable JSON file leaves the demo purses in place.
 
-Because the CSV does not contain a probability column, odds are derived from `tier` and normalized to exactly 100% within each Edit. The editable weights are near the top of the script in `index.html`:
+## Odds table
 
-| Tier | Weight |
-| --- | ---: |
-| Essential | 35 |
-| Signature | 21.5 |
-| Rare | 12 |
-| Exceptional | 7 |
-| One of one | 3 |
+Control the tier probabilities independently in `odds.csv`. Keep its header row as:
 
-Unknown tier names receive a default weight of 10.
+```csv
+tier,edit,price_range,odds
+```
+
+Each row assigns a decimal probability to one tier in one Edit. The `odds` values for each Edit included in the file must add up to exactly `1.00`. For example, `0.35` means that the tier receives 35% of that Edit's total probability. When a tier contains multiple purses, its probability is split evenly between them. You can add Edits one at a time; Edits not yet present in the table keep their built-in fallback odds.
+
+Use `price_range` as an inventory check in the form `1500-4999` or `5000+`; amounts are USD without currency symbols or commas. A purse outside its tier's configured range produces a browser console warning but remains eligible.
+
+Every tier used in `bags.csv` should have a matching row for that Edit in `odds.csv`. Inventory with no matching odds row receives 0%. If a configured tier has no available purses, the remaining available tier odds are proportionally normalized to 100% so a reveal can still complete.
 
 Run the converter locally from the repository root with:
 
 ```sh
 bash scripts/csv-to-json.sh
+bash scripts/odds-to-json.sh
 ```
 
-On GitHub, `.github/workflows/build-bag-data.yml` runs whenever `data/bags.csv` changes. It overwrites `data/bags.json` and commits the generated file back to the same branch.
+On GitHub, `.github/workflows/build-bag-data.yml` runs whenever either CSV changes. It overwrites the matching JSON files and commits them back to the same branch. The page reads the generated JSON files, so edit the CSV source files rather than editing JSON by hand.
