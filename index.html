@@ -279,6 +279,7 @@
       inset: 0;
       z-index: 50;
       display: grid;
+      isolation: isolate;
       place-items: center;
       padding: 24px;
       background: rgba(38, 18, 22, .58);
@@ -291,6 +292,8 @@
     .modal.show { opacity: 1; visibility: visible; }
 
     .modal-sheet {
+      position: relative;
+      z-index: 1;
       width: min(100%, 690px);
       max-height: min(88vh, 850px);
       overflow: auto;
@@ -309,7 +312,7 @@
       position: absolute;
       top: 24px;
       right: 24px;
-      z-index: 90;
+      z-index: 2;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -653,10 +656,10 @@
       .contents-modal .sheet-head,
       #tier-odds-modal .sheet-head { padding-right: 112px; }
       .modal-exit {
-        position: fixed;
+        position: absolute;
         top: max(14px, env(safe-area-inset-top));
         right: 14px;
-        z-index: 75;
+        z-index: 2;
         width: auto;
         min-width: 88px;
         height: 48px;
@@ -896,7 +899,7 @@
       </div>
       <div class="odds-summary"><span id="contents-price">Entry $100.00</span><span id="contents-count">28 possible pieces</span></div>
       <div class="contents-gallery" id="contents-list"></div>
-      <p class="proof-intro">Pieces are ordered from highest to lowest estimated retail value. Retail values are estimates and are not guaranteed cash redemption values.</p>
+      <p class="proof-intro">Pieces are ordered from highest to lowest MSRP. MSRP is provided for reference and is not a guaranteed cash redemption value.</p>
     </div>
   </div>
 
@@ -943,7 +946,7 @@
       <div class="reward-copy">
         <p class="kicker" id="reward-tier">Gucci / Icon reward</p>
         <h2 id="reward-name">Paparazzo Large Top Handle Bag</h2>
-        <p class="reward-value" id="reward-value">Estimated retail · $3,650.00</p>
+        <p class="reward-value" id="reward-value">MSRP · $3,650.00</p>
         <p class="reward-chance" id="reward-chance">Published chance · 2.4%</p>
         <p class="buyback-offer" id="buyback-offer">Instant buyback offer · $2,555.00</p>
         <div class="reward-actions">
@@ -1409,7 +1412,7 @@
           <div class="contents-image">
             <img src="${product.image || box.image}" alt="${escapeHtml(product.name)}" style="object-position:${product.position || 'center'}" loading="${index < 2 ? 'eager' : 'lazy'}" decoding="async" data-editorial-crop>
             <span class="contents-price-tag">
-              <small>Estimated retail</small>
+              <small>MSRP</small>
               <strong>${money.format(product.value / 100)}</strong>
             </span>
           </div>
@@ -1419,7 +1422,7 @@
             <h3>${escapeHtml(product.name)}</h3>
             <div class="contents-meta">
               <span>${escapeHtml(product.tier).replace(/\s+/g, '&nbsp;')}&nbsp;tier</span>
-              <span class="contents-value-note">Ranked by estimated retail</span>
+              <span class="contents-value-note">Ranked by MSRP</span>
             </div>
           </div>
         </article>`).join('');
@@ -1707,7 +1710,7 @@
         : product.chance;
       $('#reward-tier').textContent = `${product.brand ? `${product.brand} / ` : ''}${product.tier} reward`;
       $('#reward-name').textContent = product.name;
-      $('#reward-value').textContent = `Estimated retail · ${money.format(product.value / 100)}`;
+      $('#reward-value').textContent = `MSRP · ${money.format(product.value / 100)}`;
       $('#reward-chance').textContent = `Published chance · ${percent.format(publishedChance)}%`;
       $('#buyback-offer').textContent = `Instant buyback offer · ${money.format(buybackValue / 100)}`;
       setRewardImage(product.image || FALLBACK_PHOTO, product.name, product.position);
@@ -1893,15 +1896,18 @@
     $('#reward-proof-btn').addEventListener('click', () => { renderProof(); showModal($('#fair-modal')); });
     $('#client-seed').addEventListener('change', event => localStorage.setItem('bagbox-client-seed', event.target.value.trim()));
 
-    document.querySelectorAll('.close-btn').forEach(button => {
-      const dismiss = event => {
-        event.preventDefault();
-        event.stopPropagation();
-        hideModal(button.closest('.modal'));
-      };
-      button.addEventListener('touchend', dismiss, { passive: false });
-      button.addEventListener('click', dismiss);
-    });
+    function dismissFromCloseControl(event) {
+      const button = event.target instanceof Element
+        ? event.target.closest('.close-btn')
+        : null;
+      if (!button) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      hideModal(button.closest('.modal'));
+    }
+
+    document.addEventListener('pointerdown', dismissFromCloseControl, true);
+    document.addEventListener('click', dismissFromCloseControl, true);
     document.querySelectorAll('.modal').forEach(modal => modal.addEventListener('click', event => {
       if (event.target === modal && modal.id !== 'reward-modal') hideModal(modal);
     }));
