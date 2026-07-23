@@ -1,10 +1,12 @@
-name: Build bag data
+name: Build catalog data
 
 on:
   push:
     paths:
       - data/bags.csv
+      - data/odds.csv
       - scripts/csv-to-json.sh
+      - scripts/odds-to-json.sh
       - .github/workflows/build-bag-data.yml
   workflow_dispatch:
 
@@ -24,19 +26,21 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Convert CSV to JSON
-        run: bash scripts/csv-to-json.sh data/bags.csv data/bags.json
+      - name: Convert catalog CSV files to JSON
+        run: |
+          bash scripts/csv-to-json.sh data/bags.csv data/bags.json
+          bash scripts/odds-to-json.sh data/odds.csv data/odds.json
 
       - name: Commit generated JSON
         run: |
-          git add data/bags.json
+          git add data/bags.json data/odds.json
 
           if git diff --cached --quiet; then
-            echo "data/bags.json is already current."
+            echo "Generated catalog JSON is already current."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: regenerate bag data"
+          git commit -m "chore: regenerate catalog data"
           git push
