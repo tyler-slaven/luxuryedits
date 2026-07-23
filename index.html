@@ -321,6 +321,67 @@
     .tier-odds-row span { font: 400 24px/1 var(--serif); }
     .tier-odds-row strong { color: var(--burgundy); font-size: 14px; font-variant-numeric: tabular-nums; }
 
+    .contents-modal .modal-sheet {
+      width: min(100%, 1040px);
+      max-height: min(94vh, 980px);
+      padding: 0;
+      background: #f5efe7;
+    }
+    .contents-modal .sheet-head { margin: 0; padding: 44px 46px 28px; }
+    .contents-modal .sheet-head h2 { font-size: clamp(50px, 6vw, 78px); }
+    .contents-modal .odds-summary { margin: 0 46px 28px; }
+    .contents-gallery { display: grid; border-top: 1px solid var(--line); }
+    .contents-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, .55fr);
+      min-height: 540px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+    .contents-card:first-child { min-height: 660px; }
+    .contents-card:nth-child(even) { grid-template-columns: minmax(280px, .55fr) minmax(0, 1.45fr); background: #efe2dc; }
+    .contents-card:nth-child(even) .contents-image { order: 2; }
+    .contents-image {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      overflow: hidden;
+      background: #fff;
+    }
+    .contents-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 70px rgba(67, 32, 35, .045);
+    }
+    .contents-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+      padding: clamp(22px, 4vw, 58px);
+      transition: transform .7s cubic-bezier(.2, .8, .2, 1);
+    }
+    .contents-card:hover .contents-image img { transform: scale(1.035); }
+    .contents-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      padding: 44px;
+    }
+    .contents-rank { color: var(--rose); font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+    .contents-brand { margin: auto 0 10px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .contents-copy h3 { margin: 0; font: 400 clamp(34px, 4vw, 54px)/.96 var(--serif); letter-spacing: -.035em; overflow-wrap: anywhere; }
+    .contents-meta { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-top: auto; padding-top: 30px; border-top: 1px solid var(--line); }
+    .contents-meta span { color: var(--burgundy); font-size: 9px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .contents-meta strong { font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .contents-modal > .modal-sheet > .proof-intro { margin: 0; padding: 28px 46px 40px; }
+
     .proof-intro { color: var(--muted); font-size: 12px; line-height: 1.7; }
     .seed-control { margin: 24px 0; }
     .seed-control label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; }
@@ -521,16 +582,58 @@
       .odds-value { font-size: 9px; }
       .tier-odds-row { padding-block: 16px; }
       .tier-odds-row span { font-size: 21px; }
+      .contents-modal .modal-sheet { max-height: 100dvh; border-radius: 22px 22px 0 0; }
+      .contents-modal .sheet-head { padding: 28px 20px 22px; }
+      .contents-modal .sheet-head h2 { font-size: clamp(44px, 13vw, 62px); }
+      .contents-modal .odds-summary { margin: 0 20px 20px; }
+      .contents-card,
+      .contents-card:first-child,
+      .contents-card:nth-child(even) {
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100dvh - 150px);
+        background: var(--paper);
+      }
+      .contents-card:nth-child(even) { background: #efe2dc; }
+      .contents-card:nth-child(even) .contents-image { order: 0; }
+      .contents-image { flex: 1 1 auto; min-height: min(58dvh, 540px); }
+      .contents-image img { padding: clamp(14px, 4vw, 24px); }
+      .contents-copy { flex: 0 0 auto; min-height: 260px; padding: 26px 22px 24px; }
+      .contents-brand { margin: 28px 0 8px; }
+      .contents-copy h3 { font-size: clamp(32px, 9.5vw, 44px); }
+      .contents-meta { margin-top: 28px; padding-top: 18px; }
+      .contents-modal > .modal-sheet > .proof-intro { padding: 24px 20px 34px; }
       .seed-control input { min-height: 48px; font-size: 16px; }
       .proof-field { padding: 11px; }
       .inventory-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
       .item-card img { height: auto; aspect-ratio: 4 / 5; object-fit: contain; }
       .item-card strong { font-size: 17px; }
       .item-meta { flex-direction: column; gap: 3px; }
-      .reward-modal .modal-sheet { max-height: 100dvh; padding-bottom: max(20px, env(safe-area-inset-bottom)); }
-      .reward-photo { display: grid; place-items: center; min-height: 230px; height: min(39dvh, 330px); overflow: hidden; }
-      .reward-photo img { max-width: 100%; max-height: 100%; object-fit: contain; visibility: visible; opacity: 1; }
-      .reward-copy { padding: 28px 20px 8px; }
+      .reward-modal .modal-sheet {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100dvh;
+        max-height: 100dvh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+        border-radius: 0;
+        scroll-behavior: auto;
+      }
+      .reward-photo {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        flex: 0 0 min(44dvh, 380px);
+        place-items: center;
+        width: 100%;
+        min-height: 260px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .reward-photo img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; visibility: visible; opacity: 1; }
+      .reward-copy { position: relative; z-index: 2; flex: 0 0 auto; padding: 28px 20px 8px; background: var(--paper); }
       .reward-copy h2 { font-size: clamp(40px, 12vw, 50px); }
       .reward-value { margin-top: 14px; }
       .reward-chance { margin-bottom: 8px; }
@@ -640,14 +743,14 @@
     </footer>
   </div>
 
-  <div class="modal" id="contents-modal" role="dialog" aria-modal="true" aria-labelledby="contents-title">
+  <div class="modal contents-modal" id="contents-modal" role="dialog" aria-modal="true" aria-labelledby="contents-title">
     <div class="modal-sheet">
       <div class="sheet-head">
         <div><p class="kicker" id="contents-kicker">New York Edit</p><h2 id="contents-title">See what's inside.</h2></div>
         <button class="close-btn" type="button" aria-label="Close">×</button>
       </div>
       <div class="odds-summary"><span id="contents-price">Entry $100.00</span><span id="contents-count">28 possible pieces</span></div>
-      <div class="odds-list" id="contents-list"></div>
+      <div class="contents-gallery" id="contents-list"></div>
       <p class="proof-intro">Pieces are ordered from highest to lowest estimated retail value. Retail values are estimates and are not guaranteed cash redemption values.</p>
     </div>
   </div>
@@ -1154,18 +1257,21 @@
       $('#contents-kicker').textContent = box.name;
       $('#contents-price').textContent = `Entry ${money.format(box.price / 100)}`;
       $('#contents-count').textContent = `${products.length} possible ${products.length === 1 ? 'piece' : 'pieces'}`;
-      $('#contents-list').innerHTML = products.map(product => `
-        <div class="odds-row">
-          <img class="odds-thumb" src="${product.image || box.image}" alt="${escapeHtml(product.name)}" style="object-position:${product.position || 'center'}" loading="lazy" decoding="async">
-          <span class="odds-product">
-            ${product.brand ? `<small>${escapeHtml(product.brand)}</small>` : ''}
-            <strong>${escapeHtml(product.name)}</strong>
-          </span>
-          <span class="odds-meta">
-            <span class="odds-tier">${escapeHtml(product.tier)}</span>
-            <span class="odds-value">Est. ${money.format(product.value / 100)}</span>
-          </span>
-        </div>`).join('');
+      $('#contents-list').innerHTML = products.map((product, index) => `
+        <article class="contents-card">
+          <div class="contents-image">
+            <img src="${product.image || box.image}" alt="${escapeHtml(product.name)}" style="object-position:${product.position || 'center'}" loading="${index < 2 ? 'eager' : 'lazy'}" decoding="async">
+          </div>
+          <div class="contents-copy">
+            <span class="contents-rank">${String(index + 1).padStart(2, '0')} / ${String(products.length).padStart(2, '0')}</span>
+            <p class="contents-brand">${escapeHtml(product.brand || 'Luxury Edits')}</p>
+            <h3>${escapeHtml(product.name)}</h3>
+            <div class="contents-meta">
+              <span>${escapeHtml(product.tier)} tier</span>
+              <strong>Est. ${money.format(product.value / 100)}</strong>
+            </div>
+          </div>
+        </article>`).join('');
     }
 
     function getTierOdds(box) {
@@ -1340,9 +1446,14 @@
     }
 
     function showModal(modal) {
+      const sheet = modal.querySelector('.modal-sheet');
+      if (sheet) sheet.scrollTop = 0;
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
-      setTimeout(() => modal.querySelector('button, input')?.focus(), 150);
+      setTimeout(() => {
+        if (sheet) sheet.scrollTop = 0;
+        modal.querySelector('button, input')?.focus({ preventScroll: true });
+      }, 150);
     }
 
     function hideModal(modal) {
