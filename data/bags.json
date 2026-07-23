@@ -1,12 +1,282 @@
 [
   {
-    "id": "chanel_lamb_26",
-    "name": "Fall Winter 2026 Pre-Collection Small Flap Bag",
-    "price": 590000,
-    "brand": "Chanel",
-    "edit": "Paris",
-    "tier": "Exceptional",
-    "imageName": "chanel_lamb_26.png",
-    "image": "./images/chanel_lamb_26.png"
+    "id": "1",
+    "name": "Water Bottle Crossbody- Pocket",
+    "price": 4800,
+    "brand": "Lululemon",
+    "edit": "New York",
+    "tier": "Studio",
+    "imageName": "lulu_wat.webp",
+    "image": "./images/lulu_wat.webp"
+  },
+  {
+    "id": "2",
+    "name": "Small Slouchy Sling Bag 3L",
+    "price": 5800,
+    "brand": "Lululemon",
+    "edit": "New York",
+    "tier": "Studio",
+    "imageName": "lulu_slouch.webp",
+    "image": "./images/lulu_slouch.webp"
+  },
+  {
+    "id": "3",
+    "name": "Loop Pebbled Leather Slim Pochette Bag",
+    "price": 12800,
+    "brand": "Kate Spade",
+    "edit": "New York",
+    "tier": "Runway",
+    "imageName": "kate_loop.webp",
+    "image": "./images/kate_loop.webp"
+  },
+  {
+    "id": "4",
+    "name": "Ruched Tote Bag 24L",
+    "price": 7800,
+    "brand": "Lululemon",
+    "edit": "New York",
+    "tier": "Studio",
+    "imageName": "lulu_ruched.webp",
+    "image": "./images/lulu_ruched.webp"
+  },
+  {
+    "id": "5",
+    "name": "Margot Shoulder Bag",
+    "price": 13900,
+    "brand": "Kate Spade",
+    "edit": "New York",
+    "tier": "Runway",
+    "imageName": "kate_margot.avif",
+    "image": "./images/kate_margot.avif"
+  },
+  {
+    "id": "6",
+    "name": "Izzy Small Signature Logo Barrel Pochette",
+    "price": 9950,
+    "brand": "Michael Kors",
+    "edit": "New York",
+    "tier": "Studio",
+    "imageName": "kors_izzy.avif",
+    "image": "./images/kors_izzy.avif"
+  },
+  {
+    "id": "7",
+    "name": "Jet Set Small Signature Logo Card Case Wristlet",
+    "price": 7950,
+    "brand": "Michael Kors",
+    "edit": "New York",
+    "tier": "Studio",
+    "imageName": "kors_jet.avif",
+    "image": "./images/kors_jet.avif"
+  },
+  {
+    "id": "8",
+    "name": "Jet Set Medium Signature Logo Convertible Wristlet",
+    "price": 12950,
+    "brand": "Michael Kors",
+    "edit": "New York",
+    "tier": "Runway",
+    "imageName": "kors_jetm.avif",
+    "image": "./images/kors_jetm.avif"
+  },
+  {
+    "id": "9",
+    "name": "Large Logo Continental Wallet",
+    "price": 15950,
+    "brand": "Michael Kors",
+    "edit": "New York",
+    "tier": "Runway",
+    "imageName": "kors_logo.avif",
+    "image": "./images/kors_logo.avif"
+  },
+  {
+    "id": "10",
+    "name": "Hamilton Moderne Extra-Small Leather Crossbody Bag",
+    "price": 17950,
+    "brand": "Michael Kors",
+    "edit": "New York",
+    "tier": "Couture",
+    "imageName": "kors_ham.avif",
+    "image": "./images/kors_ham.avif"
+  },
+  {
+    "id": "11",
+    "name": "Sam Ksnyl Nylon North South Phone Crossbody",
+    "price": 14800,
+    "brand": "Kate Spade",
+    "edit": "New York",
+    "tier": "Runway",
+    "imageName": "kate_sam.avif",
+    "image": "./images/kate_sam.avif"
+  },
+  {
+    "id": "12",
+    "name": "Loop Crossbody",
+    "price": 19800,
+    "brand": "Kate Spade",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "kate_looppale.avif",
+    "image": "./images/kate_looppale.avif"
+  },
+  {
+    "id": "13",
+    "name": "Coastal Pouch",
+    "price": 4400,
+    "brand": "Vuori",
+    "edit": "New York",
+    "tier": "Chic",
+    "imageName": "vuori_coast.webp",
+    "image": "./images/vuori_coast.webp"
+  },
+  {
+    "id": "14",
+    "name": "All Around Tote",
+    "price": 8800,
+    "brand": "Vuori",
+    "edit": "New York",
+    "tier": "Studio",
+    "imageName": "vuori_tote.webp",
+    "image": "./images/vuori_tote.webp"
+  },
+  {
+    "id": "15",
+    "name": "Nike One Duffel Bag (35L)",
+    "price": 12500,
+    "brand": "Nike",
+    "edit": "New York",
+    "tier": "Runway",
+    "imageName": "nike_duff.avif",
+    "image": "./images/nike_duff.avif"
+  },
+  {
+    "id": "16",
+    "name": "Triple Compartment Tote Bag 18L",
+    "price": 16800,
+    "brand": "Lululemon",
+    "edit": "New York",
+    "tier": "Couture",
+    "imageName": "lulu_trip.webp",
+    "image": "./images/lulu_trip.webp"
+  },
+  {
+    "id": "17",
+    "name": "On A Roll Zip Cardholder",
+    "price": 11000,
+    "brand": "Kate Spade",
+    "edit": "New York",
+    "tier": "Signature",
+    "imageName": "kate_metro.avif",
+    "image": "./images/kate_metro.avif"
+  },
+  {
+    "id": "18",
+    "name": "Devin Spade Flower Jacquard Bifold Wallet",
+    "price": 11000,
+    "brand": "Kate Spade",
+    "edit": "New York",
+    "tier": "Signature",
+    "imageName": "kate_dev.avif",
+    "image": "./images/kate_dev.avif"
+  },
+  {
+    "id": "19",
+    "name": "Paris Diamond Quilted Satin Wallet on a Chain",
+    "price": 125000,
+    "brand": "Saint Laurent",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "ysl_paris.webp",
+    "image": "./images/ysl_paris.webp"
+  },
+  {
+    "id": "20",
+    "name": "Limited Edition Tote",
+    "price": 47500,
+    "brand": "Tory Burch",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "tory_tote.avif",
+    "image": "./images/tory_tote.avif"
+  },
+  {
+    "id": "21",
+    "name": "Paris Diamond Quilted Grain de Poudre Leather Envelope Pouch",
+    "price": 89000,
+    "brand": "Saint Laurent",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "ysl_poudre.webp",
+    "image": "./images/ysl_poudre.webp"
+  },
+  {
+    "id": "22",
+    "name": "Elora Refined Leather Top Handle Bag",
+    "price": 19500,
+    "brand": "Coach",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "coach_elora.webp",
+    "image": "./images/coach_elora.webp"
+  },
+  {
+    "id": "23",
+    "name": "Small Check Cotswolds Tote",
+    "price": 259500,
+    "brand": "Burberry",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "burb_cots.webp",
+    "image": "./images/burb_cots.webp"
+  },
+  {
+    "id": "24",
+    "name": "Tabby 26 Loved Leather Shoulder Bag",
+    "price": 47500,
+    "brand": "Coach",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "coach_tabby.webp",
+    "image": "./images/coach_tabby.webp"
+  },
+  {
+    "id": "25",
+    "name": "Paparazzo large top handle bag",
+    "price": 365000,
+    "brand": "Gucci",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "gucci_pap.webp",
+    "image": "./images/gucci_pap.webp"
+  },
+  {
+    "id": "26",
+    "name": "Gucci Venice small bucket bag",
+    "price": 255000,
+    "brand": "Gucci",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "gucci_buc.webp",
+    "image": "./images/gucci_buc.webp"
+  },
+  {
+    "id": "27",
+    "name": "Rivière Mini Canvas Tote",
+    "price": 169000,
+    "brand": "Versace",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "vers_rivi.webp",
+    "image": "./images/vers_rivi.webp"
+  },
+  {
+    "id": "28",
+    "name": "Rivière Large Canvas Tote",
+    "price": 195000,
+    "brand": "Versace",
+    "edit": "New York",
+    "tier": "Icon",
+    "imageName": "vers_rivl.webp",
+    "image": "./images/vers_rivl.webp"
   }
 ]
