@@ -697,6 +697,7 @@
       }
       .contents-image img { padding: clamp(14px, 4vw, 24px); }
       .contents-image img.contents-smart-crop { padding: 8px; }
+      .contents-card:hover .contents-image img { transform: none; }
       .contents-price-tag { right: 14px; bottom: 14px; min-width: 138px; padding: 11px 12px 10px; }
       .contents-price-tag strong { font-size: 23px; }
       .contents-copy { flex: 0 0 auto; min-height: 260px; padding: 26px 22px 24px; }
@@ -773,7 +774,7 @@
       .reward-photo img.reward-smart-crop {
         padding: 14px 18px 8px;
         mix-blend-mode: multiply;
-        transform: scale(1.04);
+        transform: none;
       }
       .reward-copy { position: relative; z-index: 2; flex: 0 0 auto; padding: 28px 20px 8px; background: var(--paper); }
       .reward-copy h2 { font-size: clamp(40px, 12vw, 50px); }
@@ -1584,17 +1585,20 @@
       const centerX = ((minX + maxX + 1) / 2) * scaleX;
       const centerY = ((minY + maxY + 1) / 2) * scaleY;
       const subjectAspect = (detectedWidth * scaleX) / (detectedHeight * scaleY);
-      const resolvedTargetAspect = targetAspect === 'adaptive'
+      const desiredTargetAspect = targetAspect === 'adaptive'
         ? Math.max(.82, Math.min(1.5, subjectAspect))
         : targetAspect;
-      let cropWidth = detectedWidth * scaleX * padding;
-      let cropHeight = detectedHeight * scaleY * padding;
+      let cropWidth = Math.min(sourceWidth, detectedWidth * scaleX * padding);
+      let cropHeight = Math.min(sourceHeight, detectedHeight * scaleY * padding);
+      const minimumTargetAspect = cropWidth / sourceHeight;
+      const maximumTargetAspect = sourceWidth / cropHeight;
+      const resolvedTargetAspect = Math.max(
+        minimumTargetAspect,
+        Math.min(maximumTargetAspect, desiredTargetAspect)
+      );
       if (cropWidth / cropHeight < resolvedTargetAspect) cropWidth = cropHeight * resolvedTargetAspect;
       else cropHeight = cropWidth / resolvedTargetAspect;
 
-      const fitScale = Math.min(1, sourceWidth / cropWidth, sourceHeight / cropHeight);
-      cropWidth *= fitScale;
-      cropHeight *= fitScale;
       const cropX = Math.max(0, Math.min(sourceWidth - cropWidth, centerX - cropWidth / 2));
       const cropY = Math.max(0, Math.min(sourceHeight - cropHeight, centerY - cropHeight / 2));
       const outputWidth = Math.min(maximumWidth, Math.max(1, Math.round(cropWidth)));
