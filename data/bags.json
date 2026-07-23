@@ -266,8 +266,8 @@
     "brand": "Versace",
     "edit": "New York",
     "tier": "Icon",
-    "imageName": "vers_rivi.webp",
-    "image": "./images/vers_rivi.webp"
+    "imageName": "vers_rivi.avif",
+    "image": "./images/vers_rivi.avif"
   },
   {
     "id": "28",
@@ -276,7 +276,7 @@
     "brand": "Versace",
     "edit": "New York",
     "tier": "Icon",
-    "imageName": "vers_rivl.webp",
-    "image": "./images/vers_rivl.webp"
+    "imageName": "vers_rivl.avif",
+    "image": "./images/vers_rivl.avif"
   }
 ]
