@@ -328,7 +328,8 @@
       background: #f5efe7;
     }
     .contents-modal .sheet-head { margin: 0; padding: 44px 46px 28px; }
-    .contents-modal .sheet-head h2 { font-size: clamp(50px, 6vw, 78px); }
+    .contents-modal .sheet-head > div { min-width: 0; }
+    .contents-modal .sheet-head h2 { max-width: 100%; font-size: clamp(50px, 6vw, 78px); overflow-wrap: normal; word-break: normal; text-wrap: balance; }
     .contents-modal .odds-summary { margin: 0 46px 28px; }
     .contents-gallery { display: grid; border-top: 1px solid var(--line); }
     .contents-card {
@@ -366,6 +367,24 @@
       padding: clamp(22px, 4vw, 58px);
       transition: transform .7s cubic-bezier(.2, .8, .2, 1);
     }
+    .contents-price-tag {
+      position: absolute;
+      right: 24px;
+      bottom: 24px;
+      z-index: 2;
+      display: grid;
+      justify-items: end;
+      gap: 4px;
+      min-width: 150px;
+      padding: 13px 15px 12px;
+      color: var(--ivory);
+      background: var(--burgundy);
+      box-shadow: 0 12px 30px rgba(58, 11, 25, .22);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .contents-price-tag small { font-size: 7px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    .contents-price-tag strong { font: 400 26px/1 var(--serif); letter-spacing: -.02em; }
     .contents-card:hover .contents-image img { transform: scale(1.035); }
     .contents-copy {
       display: flex;
@@ -375,11 +394,11 @@
       padding: 44px;
     }
     .contents-rank { color: var(--rose); font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
-    .contents-brand { margin: auto 0 10px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-    .contents-copy h3 { margin: 0; font: 400 clamp(34px, 4vw, 54px)/.96 var(--serif); letter-spacing: -.035em; overflow-wrap: anywhere; }
+    .contents-brand { max-width: 100%; margin: auto 0 10px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .16em; overflow-wrap: normal; word-break: normal; text-transform: uppercase; }
+    .contents-copy h3 { max-width: 100%; margin: 0; font: 400 clamp(34px, 4vw, 54px)/.96 var(--serif); letter-spacing: -.035em; hyphens: none; overflow-wrap: break-word; word-break: normal; text-wrap: balance; }
     .contents-meta { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-top: auto; padding-top: 30px; border-top: 1px solid var(--line); }
-    .contents-meta span { color: var(--burgundy); font-size: 9px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
-    .contents-meta strong { font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .contents-meta span { color: var(--burgundy); font-size: 9px; font-weight: 700; letter-spacing: .13em; overflow-wrap: normal; word-break: normal; text-transform: uppercase; }
+    .contents-value-note { color: var(--muted) !important; font-size: 8px !important; text-align: right; }
     .contents-modal > .modal-sheet > .proof-intro { margin: 0; padding: 28px 46px 40px; }
 
     .proof-intro { color: var(--muted); font-size: 12px; line-height: 1.7; }
@@ -598,10 +617,12 @@
       .contents-card:nth-child(even) .contents-image { order: 0; }
       .contents-image { flex: 1 1 auto; min-height: min(58dvh, 540px); }
       .contents-image img { padding: clamp(14px, 4vw, 24px); }
+      .contents-price-tag { right: 14px; bottom: 14px; min-width: 138px; padding: 11px 12px 10px; }
+      .contents-price-tag strong { font-size: 23px; }
       .contents-copy { flex: 0 0 auto; min-height: 260px; padding: 26px 22px 24px; }
       .contents-brand { margin: 28px 0 8px; }
       .contents-copy h3 { font-size: clamp(32px, 9.5vw, 44px); }
-      .contents-meta { margin-top: 28px; padding-top: 18px; }
+      .contents-meta { align-items: center; margin-top: 28px; padding-top: 18px; }
       .contents-modal > .modal-sheet > .proof-intro { padding: 24px 20px 34px; }
       .seed-control input { min-height: 48px; font-size: 16px; }
       .proof-field { padding: 11px; }
@@ -630,9 +651,50 @@
         width: 100%;
         min-height: 260px;
         overflow: hidden;
-        background: #fff;
+        background:
+          radial-gradient(circle at 50% 40%, rgba(255, 255, 255, .98) 0 24%, rgba(250, 242, 237, .96) 58%, #ead8d1 100%);
       }
-      .reward-photo img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; visibility: visible; opacity: 1; }
+      .reward-photo::before {
+        content: "Your reveal";
+        position: absolute;
+        top: max(16px, env(safe-area-inset-top));
+        left: 18px;
+        z-index: 3;
+        color: var(--burgundy);
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+      }
+      .reward-photo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: linear-gradient(to bottom, transparent 72%, rgba(72, 23, 34, .07));
+        box-shadow: inset 0 -1px rgba(72, 23, 34, .08);
+      }
+      .reward-photo img {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        padding: 22px;
+        object-fit: contain;
+        visibility: visible;
+        opacity: 1;
+        filter: drop-shadow(0 20px 22px rgba(54, 20, 28, .14));
+        transform: scale(.98);
+        transition: opacity .25s, transform .55s cubic-bezier(.2, .8, .2, 1);
+      }
+      .reward-photo img.reward-smart-crop {
+        padding: 14px 18px 8px;
+        mix-blend-mode: multiply;
+        transform: scale(1.04);
+      }
       .reward-copy { position: relative; z-index: 2; flex: 0 0 auto; padding: 28px 20px 8px; background: var(--paper); }
       .reward-copy h2 { font-size: clamp(40px, 12vw, 50px); }
       .reward-value { margin-top: 14px; }
@@ -1261,14 +1323,18 @@
         <article class="contents-card">
           <div class="contents-image">
             <img src="${product.image || box.image}" alt="${escapeHtml(product.name)}" style="object-position:${product.position || 'center'}" loading="${index < 2 ? 'eager' : 'lazy'}" decoding="async">
+            <span class="contents-price-tag">
+              <small>Estimated retail</small>
+              <strong>${money.format(product.value / 100)}</strong>
+            </span>
           </div>
           <div class="contents-copy">
             <span class="contents-rank">${String(index + 1).padStart(2, '0')} / ${String(products.length).padStart(2, '0')}</span>
-            <p class="contents-brand">${escapeHtml(product.brand || 'Luxury Edits')}</p>
+            <p class="contents-brand">${escapeHtml(product.brand || 'Luxury Edits').replace(/\s+/g, '&nbsp;')}</p>
             <h3>${escapeHtml(product.name)}</h3>
             <div class="contents-meta">
-              <span>${escapeHtml(product.tier)} tier</span>
-              <strong>Est. ${money.format(product.value / 100)}</strong>
+              <span>${escapeHtml(product.tier).replace(/\s+/g, '&nbsp;')}&nbsp;tier</span>
+              <span class="contents-value-note">Ranked by estimated retail</span>
             </div>
           </div>
         </article>`).join('');
@@ -1354,6 +1420,131 @@
       setTimeout(() => showReward(state.pending), 1550);
     }
 
+    let rewardImageObjectUrl = null;
+    let rewardImageRequest = 0;
+    let rewardCropStartedRequest = 0;
+
+    function cropRewardImage(img, requestId) {
+      try {
+        if (requestId !== rewardImageRequest || rewardCropStartedRequest === requestId) return;
+        rewardCropStartedRequest = requestId;
+        const sourceWidth = img.naturalWidth;
+        const sourceHeight = img.naturalHeight;
+        if (!sourceWidth || !sourceHeight) return;
+
+        const sampleWidth = Math.min(360, sourceWidth);
+        const sampleHeight = Math.max(1, Math.round(sourceHeight * sampleWidth / sourceWidth));
+        const sample = document.createElement('canvas');
+        sample.width = sampleWidth;
+        sample.height = sampleHeight;
+        const sampleContext = sample.getContext('2d', { willReadFrequently: true });
+        sampleContext.drawImage(img, 0, 0, sampleWidth, sampleHeight);
+        const pixels = sampleContext.getImageData(0, 0, sampleWidth, sampleHeight).data;
+
+        const cornerSize = Math.max(2, Math.round(Math.min(sampleWidth, sampleHeight) * .018));
+        const corners = [
+          [0, 0],
+          [sampleWidth - cornerSize, 0],
+          [0, sampleHeight - cornerSize],
+          [sampleWidth - cornerSize, sampleHeight - cornerSize]
+        ];
+        const background = [0, 0, 0, 0];
+        let backgroundSamples = 0;
+        corners.forEach(([startX, startY]) => {
+          for (let y = startY; y < startY + cornerSize; y += 1) {
+            for (let x = startX; x < startX + cornerSize; x += 1) {
+              const offset = (y * sampleWidth + x) * 4;
+              for (let channel = 0; channel < 4; channel += 1) background[channel] += pixels[offset + channel];
+              backgroundSamples += 1;
+            }
+          }
+        });
+        background.forEach((value, index) => { background[index] = value / backgroundSamples; });
+
+        let minX = sampleWidth;
+        let minY = sampleHeight;
+        let maxX = -1;
+        let maxY = -1;
+        for (let y = 0; y < sampleHeight; y += 1) {
+          for (let x = 0; x < sampleWidth; x += 1) {
+            const offset = (y * sampleWidth + x) * 4;
+            const alpha = pixels[offset + 3];
+            const colorDifference = Math.max(
+              Math.abs(pixels[offset] - background[0]),
+              Math.abs(pixels[offset + 1] - background[1]),
+              Math.abs(pixels[offset + 2] - background[2])
+            );
+            const isForeground = background[3] < 24
+              ? alpha > 24
+              : alpha > 24 && colorDifference > 18;
+            if (!isForeground) continue;
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+          }
+        }
+
+        if (maxX < minX || maxY < minY) return;
+        const detectedWidth = maxX - minX + 1;
+        const detectedHeight = maxY - minY + 1;
+        if (detectedWidth / sampleWidth > .9 && detectedHeight / sampleHeight > .9) return;
+
+        const scaleX = sourceWidth / sampleWidth;
+        const scaleY = sourceHeight / sampleHeight;
+        const centerX = ((minX + maxX + 1) / 2) * scaleX;
+        const centerY = ((minY + maxY + 1) / 2) * scaleY;
+        let cropWidth = detectedWidth * scaleX * 1.24;
+        let cropHeight = detectedHeight * scaleY * 1.24;
+        const targetAspect = 4 / 3;
+        if (cropWidth / cropHeight < targetAspect) cropWidth = cropHeight * targetAspect;
+        else cropHeight = cropWidth / targetAspect;
+
+        const fitScale = Math.min(1, sourceWidth / cropWidth, sourceHeight / cropHeight);
+        cropWidth *= fitScale;
+        cropHeight *= fitScale;
+        const cropX = Math.max(0, Math.min(sourceWidth - cropWidth, centerX - cropWidth / 2));
+        const cropY = Math.max(0, Math.min(sourceHeight - cropHeight, centerY - cropHeight / 2));
+        const outputWidth = Math.min(1200, Math.max(600, Math.round(cropWidth)));
+        const outputHeight = Math.round(outputWidth / targetAspect);
+        const output = document.createElement('canvas');
+        output.width = outputWidth;
+        output.height = outputHeight;
+        output.getContext('2d').drawImage(
+          img,
+          cropX, cropY, cropWidth, cropHeight,
+          0, 0, outputWidth, outputHeight
+        );
+
+        output.toBlob(blob => {
+          if (!blob || requestId !== rewardImageRequest) return;
+          if (rewardImageObjectUrl) URL.revokeObjectURL(rewardImageObjectUrl);
+          rewardImageObjectUrl = URL.createObjectURL(blob);
+          img.onload = null;
+          img.classList.add('reward-smart-crop');
+          img.src = rewardImageObjectUrl;
+        }, 'image/webp', .92);
+      } catch (error) {
+        console.warn('Could not prepare the editorial reward crop.', error);
+      }
+    }
+
+    function setRewardImage(source, alt, position) {
+      const img = $('#reward-photo');
+      const requestId = ++rewardImageRequest;
+      rewardCropStartedRequest = 0;
+      if (rewardImageObjectUrl) {
+        URL.revokeObjectURL(rewardImageObjectUrl);
+        rewardImageObjectUrl = null;
+      }
+      img.classList.remove('reward-smart-crop');
+      img.alt = alt;
+      img.style.objectPosition = position || 'center';
+      img.onload = () => cropRewardImage(img, requestId);
+      img.src = source;
+      if (img.complete) requestAnimationFrame(() => cropRewardImage(img, requestId));
+    }
+
     function showReward(product) {
       const buybackValue = Math.round(product.value * INSTANT_BUYBACK_RATE);
       const publishedChance = Number.isFinite(product.publishedOdds)
@@ -1364,9 +1555,7 @@
       $('#reward-value').textContent = `Estimated retail · ${money.format(product.value / 100)}`;
       $('#reward-chance').textContent = `Published chance · ${percent.format(publishedChance)}%`;
       $('#buyback-offer').textContent = `Instant buyback offer · ${money.format(buybackValue / 100)}`;
-      $('#reward-photo').src = product.image || FALLBACK_PHOTO;
-      $('#reward-photo').alt = product.name;
-      $('#reward-photo').style.objectPosition = product.position || 'center';
+      setRewardImage(product.image || FALLBACK_PHOTO, product.name, product.position);
       $('#ship-btn').disabled = false;
       $('#buyback-btn').disabled = false;
       showModal($('#reward-modal'));
